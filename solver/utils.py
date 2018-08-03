@@ -90,3 +90,14 @@ def entropy(num_list, num):
     dicts = Counter(judges)
     prob = [v / n for v in dicts.values()]
     return sum([-p * math.log(p) for p in prob])
+
+
+def update_candidates(num_list, num, j):
+    """新しくコールした数字列と判定結果を用いて答え候補を更新する.
+
+    :param num_list:list of str. 現時点の答え候補.
+    :param num: str. 新しい答え.
+    :param j: Judgement class.判定結果
+    :return new_candidates: list of str 更新後の答え候補
+    """
+    return [ans_cand for ans_cand in num_list if judge(ans_cand, num) == j]
