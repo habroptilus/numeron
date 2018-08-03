@@ -10,14 +10,14 @@ DIGITS = 3  # 桁数
 class Judgement():
     """Judgement Class."""
 
-    def __init__(self):
+    def __init__(self, hit=0, bite=0):
         """Initialize.
 
         hit:位置も数字も同じである桁数
         bite:位置は違うけれど含まれてはいる個数
         """
-        self.hit = 0
-        self.bite = 0
+        self.hit = hit
+        self.bite = bite
 
     def __repr__(self):
         """表示用."""
@@ -90,14 +90,3 @@ def entropy(num_list, num):
     dicts = Counter(judges)
     prob = [v / n for v in dicts.values()]
     return sum([-p * math.log(p) for p in prob])
-
-
-def update_candidates(num_list, num, j):
-    """新しくコールした数字列と判定結果を用いて答え候補を更新する.
-
-    :param num_list:list of str. 現時点の答え候補.
-    :param num: str. 新しい答え.
-    :param j: Judgement class.判定結果
-    :return new_candidates: list of str 更新後の答え候補
-    """
-    return [ans_cand for ans_cand in num_list if judge(ans_cand, num) == j]
