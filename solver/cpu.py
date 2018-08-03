@@ -39,28 +39,3 @@ class Numeron_CPU():
         combined_scores = scores_candidates + scores_not_candidates
         all_candidates = self.candidates + self.not_candidates
         return all_candidates[combined_scores.index(max(combined_scores))]
-
-
-if __name__ == "__main__":
-    player = Numeron_CPU(lamb=0)
-    answer = input("答えを入力:")
-    turn = 1
-    if is_valid_number(answer):
-        while True:
-            if turn == 10:
-                break
-            print("Turn{}".format(turn))
-            if turn == 1:
-                call = choice(player.candidates)
-            else:
-                call = player.call_num()
-            print(call)
-            print(len(player.candidates))
-            j = judge(call, answer)
-            if j == Judgement(hit=3, bite=0):
-                print("Clear! turn{}".format(turn))
-                break
-            player.update_candidates(call, j)
-            turn += 1
-    else:
-        print("Invalid Number.")
