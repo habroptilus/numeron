@@ -158,6 +158,9 @@ class Main extends React.Component{
             });
         });
       }
+componentDidMount(){
+    this.getCPUAnswer()
+}
 
   render(){
     const restart = this.state.finished ?<div className="col-xs-6">
