@@ -1,21 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Request from 'superagent';
+
+
 
 class Main extends React.Component{
   constructor(){
-    const history=[　];
+    const history=[];
+    const cpu_history=[];
     const buttons=Array(9).fill(false)
     const answer=Array(3).fill(null)
+    const cpu_answer=Array(3).fill(null)
     const filled=0
     super()
     const correct=this.createCorrect()
+    const cpu_correct=this.createCorrect()//とりあえず自分の答えもランダムにつくってしまう
     this.state={
-      history:history,
+      history:[],//人間側のトライ・ジャッジの履歴
+      cpu_history:[],//CPU側のトライ・ジャッジの履歴
       finished:false,
       buttons:buttons,
-      answer:answer,
+      answer:answer,//人間がトライする数字
+      cpu_answer:cpu_answer,
       filled:filled,
-      correct:correct,
+      correct:correct,//人間側が答えるべき正解の数字
+      cpu_correct:cpu_correct//CPUが答えるべき正解の数字
     }
   }
 
@@ -28,7 +37,6 @@ class Main extends React.Component{
       correct.push(array[idx])
       array.splice(idx,1)
     }
-
     return correct
   }
 
@@ -65,9 +73,7 @@ class Main extends React.Component{
 
   }
 
-  judge(){
-    const answer=this.state.answer;
-    const correct=this.state.correct;
+  judge(answer,correct){
     var hit=0;
     var bite=0;
     for (var i=0; i< 3; i++){
@@ -81,12 +87,6 @@ class Main extends React.Component{
         }
       }
     }
-
-    if (hit==3){
-      this.setState({
-        finished:true,
-      });
-    }
     return {H:hit,B:bite}
   }
 
@@ -94,21 +94,44 @@ class Main extends React.Component{
   handlePost(){
     if (this.state.filled == 3){
       var history=this.state.history;
+      const man_judge=this.judge(this.state.answer,this.state.correct)
       const id=history.length+1;
     history.push(
       {
        id:id,
        try:this.state.answer,
-       judge:this.judge()
+       judge:man_judge
       }
     );
+
+    //CPUのターン
+    console.log(this.state.cpu_answer);
+    var cpu_history=this.state.cpu_history;
+    const cpu_judge=this.judge(this.state.cpu_answer,this.state.cpu_correct)
+    cpu_history.push(
+      {
+       id:id,
+       try:this.state.cpu_answer,
+       judge:cpu_judge
+      }
+    );
+
+    //終了判定
+    const finished = cpu_judge=="3H0B" || man_judge=="3H0B" ? true :false
+    //state更新
     this.setState({
         filled:0,
         buttons:Array(9).fill(false),
         answer:Array(3).fill(null),
         history:history,
+        cpu_history:cpu_history,
+        finished:finished
       });
     }
+  }
+
+  componentDidMount() {
+    this.getCPUAnswer()
   }
 
   handleRestart(){
@@ -116,12 +139,25 @@ class Main extends React.Component{
         filled:0,
         buttons:Array(9).fill(false),
         answer:Array(3).fill(null),
-        history:[ ],
+        history:[],
         correct:this.createCorrect(),
         finished:false,
       });
     }
 
+  getCPUAnswer(){
+      Request
+        .get("/api/json")
+        .end(function(err, res){
+            const hoge=res.body["answer"].split("")
+            const fuga=hoge.map(function(value) {
+                return Number(value);
+            });
+            this.setState({
+                cpu_answer:fuga
+            });
+        });
+      }
 
   render(){
     const restart = this.state.finished ?<div className="col-xs-6">
@@ -142,11 +178,9 @@ class Main extends React.Component{
       <div className="main">
         <div className="row">
           {restart}
-
           <div className="col-xs-6"><History history={this.state.history} /></div>
-
+          <div className="cpu_history"><History history={this.state.cpu_history} /></div>
         </div>
-
       </div>
     );
   }
@@ -157,7 +191,7 @@ class Delete extends React.Component{
   render(){
     return(
      <div className="delete col-xs-3 col-xs-offset-3">
-      <a　className="btn delete-btn " href="#" onClick={() => this.props.onClick()}>DEL</a>
+      <a className="btn delete-btn " href="#" onClick={() => this.props.onClick()}>DEL</a>
       </div>
     );
   }
