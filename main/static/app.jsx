@@ -26,6 +26,8 @@ class Main extends React.Component{
       correct:correct,//人間側が答えるべき正解の数字
       cpu_correct:cpu_correct//CPUが答えるべき正解の数字
     }
+
+    this.getCPUAnswer = this.getCPUAnswer.bind(this);
   }
 
   createCorrect(){
@@ -105,6 +107,7 @@ class Main extends React.Component{
     );
 
     //CPUのターン
+    this.getCPUAnswer()
     console.log(this.state.cpu_answer);
     var cpu_history=this.state.cpu_history;
     const cpu_judge=this.judge(this.state.cpu_answer,this.state.cpu_correct)
@@ -130,9 +133,6 @@ class Main extends React.Component{
     }
   }
 
-  componentDidMount() {
-    this.getCPUAnswer()
-  }
 
   handleRestart(){
     this.setState({
@@ -148,7 +148,7 @@ class Main extends React.Component{
   getCPUAnswer(){
       Request
         .get("/api/json")
-        .end(function(err, res){
+        .end((err, res)=>{
             const hoge=res.body["answer"].split("")
             const fuga=hoge.map(function(value) {
                 return Number(value);
