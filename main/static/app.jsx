@@ -24,7 +24,8 @@ class Main extends React.Component{
       cpu_answer:cpu_answer,
       filled:filled,
       correct:correct,//人間側が答えるべき正解の数字
-      cpu_correct:cpu_correct//CPUが答えるべき正解の数字
+      cpu_correct:cpu_correct,//CPUが答えるべき正解の数字
+      result:null
     }
 
     this.getCPUAnswer = this.getCPUAnswer.bind(this);
@@ -120,6 +121,16 @@ class Main extends React.Component{
 
     //終了判定
     const finished = (cpu_judge["H"]==3 || man_judge["H"]==3)
+    let result=null
+    if (finished) {
+        if (cpu_judge["H"]!=3){
+            result="win"
+        }else if (man_judge["H"]!=3) {
+            result="lose"
+        }else {
+            result="draw"
+        }
+    }
     //state更新
     this.setState({
         filled:0,
@@ -127,7 +138,8 @@ class Main extends React.Component{
         answer:Array(3).fill(null),
         history:history,
         cpu_history:cpu_history,
-        finished:finished
+        finished:finished,
+        result:result
       });
     }
   }
@@ -166,7 +178,7 @@ componentDidMount(){
 
   render(){
     const restart = this.state.finished ?<div className="col-xs-6">
-          <Restart count={this.state.history.length} onClick={this.handleRestart.bind(this)} />
+          <Restart count={this.state.history.length} result={this.state.result} onClick={this.handleRestart.bind(this)} />
         </div> : <div className="col-xs-6">
             <div className="row">
               <Answer answer={this.state.answer} />
@@ -347,10 +359,29 @@ class History extends React.Component{
 
 class Restart extends React.Component{
   render(){
+      let title_message=""
+      let box_message=""
+      let className=""
+
+      if (this.props.result=="win"){
+          title_message=  "You Win!"
+          box_message="Congratulations!!"
+          className=['restart',"win"].join(' ')
+      }else if (this.props.result=="lose") {
+          title_message=  "You Lose..."
+          box_message="Never Give Up!!"
+          className=['restart',"lose"].join(' ')
+      }else {
+          title_message=  "Draw..."
+          box_message="Another Game!"
+          className=['restart',"draw"].join(' ')
+      }
+
+
    return(
-    <div className="restart">
-      <div className="box-title">CLEAR!!</div>
-       <p>Congratulations!!</p>
+    <div className={className}>
+      <div className="box-title">{title_message}</div>
+       <p>{box_message}</p>
       <p>Trials : {this.props.count}</p>
        <a className="btn restart-btn" href="#" onClick={() => this.props.onClick()}>RESTART</a>
     </div>

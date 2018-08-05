@@ -110,3 +110,22 @@ table{
     font-weight: bold;
     letter-spacing: 0.05em;
 }
+.win{
+    background:yellow;
+}
+.win .box-title{
+    background: gold;
+}
+.lose{
+    background: lightblue;
+}
+.lose .box-title{
+    background: skyblue;
+}
+
+.draw{
+    background:lightgreen;
+}
+.draw .box-title{
+    background: green;
+}
