@@ -108,7 +108,6 @@ class Main extends React.Component{
 
     //CPUのターン
     this.getCPUAnswer()
-    console.log(this.state.cpu_answer);
     var cpu_history=this.state.cpu_history;
     const cpu_judge=this.judge(this.state.cpu_answer,this.state.cpu_correct)
     cpu_history.push(
@@ -139,8 +138,11 @@ class Main extends React.Component{
         filled:0,
         buttons:Array(9).fill(false),
         answer:Array(3).fill(null),
+        cpu_answer:Array(3).fill(null),
         history:[],
+        cpu_history:[],
         correct:this.createCorrect(),
+        cpu_correct:this.createCorrect(),
         finished:false,
       });
     }
@@ -181,8 +183,8 @@ componentDidMount(){
       <div className="main">
         <div className="row">
           {restart}
-          <div className="col-xs-6"><History history={this.state.history} /></div>
-          <div className="cpu_history"><History history={this.state.cpu_history} /></div>
+          <div className="col-xs-3"><History history={this.state.history} player="YOU" /></div>
+          <div className="col-xs-3"><History history={this.state.cpu_history} player="CPU" /></div>
         </div>
       </div>
     );
@@ -329,10 +331,12 @@ class History extends React.Component{
               <td className="judge">{result.judge.H}H{result.judge.B}B</td>
          </tr>
     )
+    const player=this.props.player
 
     return(
       <div className="history">
            <table className="history-table">
+                  <thead><tr><td colSpan="2">{player}</td></tr></thead>
                   <tbody>{history}</tbody>
            </table>
       </div>

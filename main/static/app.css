@@ -2,7 +2,7 @@
   position:relative;
   top:25px;
   left:1px;
-  width:300px;
+  width:600px;
 }
 
 .btnrow{
@@ -70,17 +70,18 @@ table{
   color:white;
 }
 
-.btn{
-  display: inline;
-    padding: 0.1em 0.5em;
-
+.restart-btn{
+    display: inline-block;
+    padding: 0.3em 1em;
     text-decoration: none;
+    color: #67c5ff;
+    border: solid 2px #67c5ff;
     border-radius: 3px;
-    font-weight: bold;
-    color: #FFF;
-    background-image: -webkit-linear-gradient(45deg, #709dff 0%, #b0c9ff 100%);
-    background-image: linear-gradient(45deg, #709dff 0%, #b0c9ff 100%);
     transition: .4s;
+}
+.restart-btn:hover {
+    background: #67c5ff;
+    color: white;
 }
 
 .post-btn{
