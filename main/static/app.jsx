@@ -120,7 +120,7 @@ class Main extends React.Component{
     );
 
     //終了判定
-    const finished = cpu_judge=="3H0B" || man_judge=="3H0B" ? true :false
+    const finished = (cpu_judge["H"]==3 || man_judge["H"]==3)
     //state更新
     this.setState({
         filled:0,
