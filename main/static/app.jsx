@@ -161,8 +161,11 @@ class Main extends React.Component{
     }
 
   getCPUAnswer(){
+      //オブジェクトの配列のままだと送れなかったのでjsonに
+      const send_data=JSON.stringify(this.state.cpu_history)
       Request
         .get("/api/json")
+        .query({history:send_data})
         .end((err, res)=>{
             const hoge=res.body["answer"].split("")
             const fuga=hoge.map(function(value) {

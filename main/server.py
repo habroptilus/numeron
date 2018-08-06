@@ -15,7 +15,14 @@ def root_url():
 
 @app.route('/api/json')
 def api_json():
-    ans = random_answer()
+    history = request.args.get('history')
+    history = eval(history)  # strで渡されるから、リストに変換
+    for e in history:
+        print("answer {}, judge {}".format(e["try"], e["judge"]))
+    if len(history) == 0:
+        ans = random_answer()
+    else:
+        pass  # cpuアルゴリズムによりansを決定
     response = jsonify({"answer": ans})
     response.status_code = 200
     return response
