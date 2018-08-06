@@ -21,7 +21,7 @@ class Judgement():
 
     def __repr__(self):
         """表示用."""
-        return "H{}B{}".format(self.hit, self.bite)
+        return "{}H{}B".format(self.hit, self.bite)
 
     def __eq__(self, other):
         """HitとBiteがそれぞれ等しければ等価.

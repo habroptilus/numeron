@@ -8,12 +8,10 @@ from random import choice, shuffle
 class Numeron_CPU():
     """CPU class."""
 
-    def __init__(self, lamb=0):
+    def __init__(self):
         """Initialize."""
         self.candidates = ["".join(e)
                            for e in list(permutations(CHARS, DIGITS))]
-        self.not_candidates = []
-        self.lamb = lamb
 
     def update_candidates(self, num, j):
         """新しくコールした数字列と判定結果を用いて答え候補を更新する.
@@ -23,8 +21,6 @@ class Numeron_CPU():
         """
         self.candidates = [
             ans_cand for ans_cand in self.candidates if judge(ans_cand, num) == j]
-        self.not_candidates += [
-            ans_cand for ans_cand in self.candidates if judge(ans_cand, num) != j]
         return
 
     def call_num(self):
@@ -32,13 +28,6 @@ class Numeron_CPU():
 
         :return: num(str)
         """
-        scores_candidates = [self.lamb / len(self.candidates) + entropy(self.candidates, e)
-                             for e in self.candidates]
-        scores_not_candidates = [
-            entropy(self.candidates, e) for e in self.not_candidates]
-        combined_scores = scores_candidates + scores_not_candidates
-        all_candidates = self.candidates + self.not_candidates
-        if len(self.candidates) < 50:  # 少なくなってきたら正解候補の中から選ぶ
-            return self.candidates[scores_candidates.index(max(scores_candidates))]
-        else:
-            return all_candidates[combined_scores.index(max(combined_scores))]
+        scores = [entropy(self.candidates, e)
+                  for e in self.candidates]
+        return self.candidates[scores.index(max(scores))]

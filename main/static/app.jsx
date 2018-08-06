@@ -25,10 +25,11 @@ class Main extends React.Component{
       filled:filled,
       correct:correct,//人間側が答えるべき正解の数字
       cpu_correct:cpu_correct,//CPUが答えるべき正解の数字
-      result:null
+      latest_judge:null,
+      latest_cpu_judge:null
     }
 
-    this.getCPUAnswer = this.getCPUAnswer.bind(this);
+    this.cpu_action = this.cpu_action.bind(this);
   }
 
   createCorrect(){
@@ -107,51 +108,30 @@ class Main extends React.Component{
       }
     );
 
-    //CPUのターン
-    this.getCPUAnswer()
-    var cpu_history=this.state.cpu_history;
-    const cpu_judge=this.judge(this.state.cpu_answer,this.state.cpu_correct)
-    cpu_history.push(
-      {
-       id:id,
-       try:this.state.cpu_answer,
-       judge:cpu_judge
-      }
-    );
-
-    //終了判定
-    const finished = (cpu_judge["H"]==3 || man_judge["H"]==3)
-    let result=null
-    if (finished) {
-        if (cpu_judge["H"]!=3){
-            result="win"
-        }else if (man_judge["H"]!=3) {
-            result="lose"
-        }else {
-            result="draw"
-        }
-    }
+    const finished = man_judge["H"]==3
     //state更新
     this.setState({
         filled:0,
         buttons:Array(9).fill(false),
         answer:Array(3).fill(null),
         history:history,
-        cpu_history:cpu_history,
         finished:finished,
-        result:result
+        latest_judge:man_judge
       });
+
+    //CPUのターン
+    this.cpu_action()
     }
   }
 
 
   handleRestart(){
-      const cpu_answer=this.getCPUAnswer()
+     // const cpu_answer=this.getCPUAnswer()
     this.setState({
         filled:0,
         buttons:Array(9).fill(false),
         answer:Array(3).fill(null),
-        cpu_answer:cpu_answer,
+        cpu_answer:Array(3).fill(null),
         history:[],
         cpu_history:[],
         correct:this.createCorrect(),
@@ -160,7 +140,7 @@ class Main extends React.Component{
       });
     }
 
-  getCPUAnswer(){
+  cpu_action(){
       //オブジェクトの配列のままだと送れなかったのでjsonに
       const send_data=JSON.stringify(this.state.cpu_history)
       Request
@@ -168,21 +148,37 @@ class Main extends React.Component{
         .query({history:send_data})
         .end((err, res)=>{
             const hoge=res.body["answer"].split("")
-            const fuga=hoge.map(function(value) {
+            const cpu_answer=hoge.map(function(value) {
                 return Number(value);
             });
+
+
+            var cpu_history=this.state.cpu_history;
+            const id=cpu_history.length+1;
+            const cpu_judge=this.judge(cpu_answer,this.state.cpu_correct)
+            cpu_history.push(
+              {
+               id:id,
+               try:cpu_answer,
+               judge:cpu_judge
+              }
+            );
+            const finished = cpu_judge["H"]==3
             this.setState({
-                cpu_answer:fuga
+                cpu_history:cpu_history,
+                finished:finished,
+                latest_cpu_judge:cpu_judge
             });
         });
       }
-componentDidMount(){
-    this.getCPUAnswer()
-}
+
 
   render(){
-    const restart = this.state.finished ?<div className="col-xs-6">
-          <Restart count={this.state.history.length} result={this.state.result} onClick={this.handleRestart.bind(this)} />
+     const count =this.state.history.length
+     const latest_judge=this.state.latest_judge
+     const latest_cpu_judge=this.state.latest_cpu_judge
+     const restart = this.state.finished ?<div className="col-xs-6">
+          <Restart count={count} latest_judge={latest_judge} cpu_judge={latest_cpu_judge} onClick={this.handleRestart.bind(this)} />
         </div> : <div className="col-xs-6">
             <div className="row">
               <Answer answer={this.state.answer} />
@@ -363,24 +359,21 @@ class History extends React.Component{
 
 class Restart extends React.Component{
   render(){
-      let title_message=""
-      let box_message=""
-      let className=""
+      //引き分けで初期化
+      let title_message=  "Draw..."
+      let box_message="Another Game!"
+      let className=['restart',"draw"].join(' ')
 
-      if (this.props.result=="win"){
+      //勝敗判定
+      if (this.props.cpu_judge["H"]!=3){
           title_message=  "You Win!"
           box_message="Congratulations!!"
           className=['restart',"win"].join(' ')
-      }else if (this.props.result=="lose") {
+      }else if(this.props.latest_judge["H"]!=3){
           title_message=  "You Lose..."
           box_message="Never Give Up!!"
           className=['restart',"lose"].join(' ')
-      }else {
-          title_message=  "Draw..."
-          box_message="Another Game!"
-          className=['restart',"draw"].join(' ')
       }
-
 
    return(
     <div className={className}>
