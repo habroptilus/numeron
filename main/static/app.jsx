@@ -2,7 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Request from 'superagent';
 
-
+import Post from './post.jsx';
+import Answer from './answer.jsx';
+import History from './history.jsx';
+import Button  from './button.jsx';
+import Delete from './delete.jsx';
+import Form from './form.jsx';
+import Restart from './restart.jsx';
+import Square from './square.jsx';
 
 class Main extends React.Component{
   constructor(){
@@ -204,187 +211,11 @@ class Main extends React.Component{
 }
 
 
-class Delete extends React.Component{
-  render(){
-    return(
-     <div className="delete col-xs-3 col-xs-offset-3">
-      <a className="btn delete-btn " href="#" onClick={() => this.props.onClick()}>DEL</a>
-      </div>
-    );
-  }
-}
-
-class Post extends React.Component{
-  render(){
-    return(
-      <div className="post col-xs-3 col-xs-3-offset-3">
-      <a className="btn post-btn " href="#" onClick={() => this.props.onClick()}>TRY</a>
-      </div>
-    );
-  }
-
-}
-
-function Square(props) {
-  return (
-    <button className="square">
-      {props.value}
-    </button>
-  );
-}
 
 
 
-class Answer extends React.Component{
-
-  renderSquare(i) {
-    return <Square value={this.props.answer[i]}/>;
-  }
-
-  render(){
-    return(
-      <div className="answer">
-        <div className="row">
-          <div className="col-xs-2 col-xs-offset-3">
-            {this.renderSquare(0)}
-          </div>
-          <div className="col-xs-2">
-            {this.renderSquare(1)}
-          </div>
-          <div className="col-xs-2">
-            {this.renderSquare(2)}
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-class Form extends React.Component{
-
-  renderButton(i) {
-    return <Button selected={this.props.buttons[i]} value={i} onClick={() => this.props.onClick(i)} />;
-  }
-
-  render(){
-    return(
-       <div className="form">
-          <div className="row">
-            <div className="col-xs-2 col-xs-offset-3">
-              {this.renderButton(1)}
-             </div>
-            <div className="col-xs-2">
-            {this.renderButton(2)}
-          </div>
-          <div className="col-xs-2">
-            {this.renderButton(3)}
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xs-2 col-xs-offset-3">
-              {this.renderButton(4)}
-             </div>
-            <div className="col-xs-2">
-            {this.renderButton(5)}
-          </div>
-          <div className="col-xs-2">
-            {this.renderButton(6)}
-          </div>
-
-        </div>
-        <div className="row">
-          <div className="col-xs-2 col-xs-offset-3">
-              {this.renderButton(7)}
-             </div>
-            <div className="col-xs-2">
-            {this.renderButton(8)}
-          </div>
-          <div className="col-xs-2">
-            {this.renderButton(9)}
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xs-2 col-xs-offset-3">
-             <div className="button none"></div>
-             </div>
-            <div className="col-xs-2">
-            {this.renderButton(0)}
-          </div>
-          <div className="col-xs-2">
-           <div className="button none" ></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-class Button extends React.Component {
-
-  render(){
-    const className=['button',this.props.selected ? "disabled" : null].join(' ')
 
 
-    return (
-    <a className={className}   href="#" onClick={() => this.props.onClick()}>
-      {this.props.value}
-    </a>
-  );
 
-  }
-
-}
-
-class History extends React.Component{
-  render(){
-    const history = this.props.history.map(result=>
-         <tr key={result.id} className="result">
-              <td className="try">{result.try}</td>
-              <td className="judge">{result.judge.H}H{result.judge.B}B</td>
-         </tr>
-    )
-    const player=this.props.player
-
-    return(
-      <div className="history">
-           <table className="history-table">
-                  <thead><tr><td colSpan="2">{player}</td></tr></thead>
-                  <tbody>{history}</tbody>
-           </table>
-      </div>
-    );
-  }
-
-}
-
-class Restart extends React.Component{
-  render(){
-      //引き分けで初期化
-      let title_message=  "Draw..."
-      let box_message="Another Game!"
-      let className=['restart',"draw"].join(' ')
-
-      //勝敗判定
-      if (this.props.cpu_judge["H"]!=3){
-          title_message=  "You Win!"
-          box_message="Congratulations!!"
-          className=['restart',"win"].join(' ')
-      }else if(this.props.latest_judge["H"]!=3){
-          title_message=  "You Lose..."
-          box_message="Never Give Up!!"
-          className=['restart',"lose"].join(' ')
-      }
-
-   return(
-    <div className={className}>
-      <div className="box-title">{title_message}</div>
-       <p>{box_message}</p>
-      <p>Trials : {this.props.count}</p>
-       <a className="btn restart-btn" href="#" onClick={() => this.props.onClick()}>RESTART</a>
-    </div>
-   );
-  }
-
-}
 
 ReactDOM.render(<Main />, document.getElementById('react-container'));
