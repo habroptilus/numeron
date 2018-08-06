@@ -1,6 +1,6 @@
 """CPU class."""
 
-from utils import *
+from solver.utils import *
 from itertools import permutations
 from random import choice, shuffle
 

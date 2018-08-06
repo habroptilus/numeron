@@ -1,5 +1,12 @@
 from flask import Flask, render_template, jsonify, request
 from random import sample
+
+import sys
+import os
+sys.path.append(os.pardir)
+
+from solver.cpu import Numeron_CPU
+from solver.utils import *
 app = Flask(__name__)
 
 
@@ -17,12 +24,15 @@ def root_url():
 def api_json():
     history = request.args.get('history')
     history = eval(history)  # strで渡されるから、リストに変換
-    for e in history:
-        print("answer {}, judge {}".format(e["try"], e["judge"]))
     if len(history) == 0:
         ans = random_answer()
     else:
-        pass  # cpuアルゴリズムによりansを決定
+        cpu_player = Numeron_CPU()
+        for e in history:
+            answer = "".join(list(map(str, e["try"])))
+            j = Judgement(hit=e["judge"]["H"], bite=e["judge"]["B"])
+            cpu_player.update_candidates(answer, j)
+        ans = cpu_player.call_num()
     response = jsonify({"answer": ans})
     response.status_code = 200
     return response
