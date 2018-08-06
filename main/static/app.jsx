@@ -127,13 +127,12 @@ class Main extends React.Component{
       });
 
     //CPUのターン
-    this.cpu_action()
+    this.cpu_action(finished)
     }
   }
 
 
   handleRestart(){
-     // const cpu_answer=this.getCPUAnswer()
     this.setState({
         filled:0,
         buttons:Array(9).fill(false),
@@ -147,7 +146,7 @@ class Main extends React.Component{
       });
     }
 
-  cpu_action(){
+  cpu_action(user_finished){
       //オブジェクトの配列のままだと送れなかったのでjsonに
       const send_data=JSON.stringify(this.state.cpu_history)
       Request
@@ -170,7 +169,7 @@ class Main extends React.Component{
                judge:cpu_judge
               }
             );
-            const finished = cpu_judge["H"]==3
+            const finished = cpu_judge["H"]==3 || user_finished
             this.setState({
                 cpu_history:cpu_history,
                 finished:finished,
@@ -211,13 +210,5 @@ class Main extends React.Component{
     );
   }
 }
-
-
-
-
-
-
-
-
 
 ReactDOM.render(<Main />, document.getElementById('react-container'));
