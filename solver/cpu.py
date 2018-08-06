@@ -38,4 +38,7 @@ class Numeron_CPU():
             entropy(self.candidates, e) for e in self.not_candidates]
         combined_scores = scores_candidates + scores_not_candidates
         all_candidates = self.candidates + self.not_candidates
-        return all_candidates[combined_scores.index(max(combined_scores))]
+        if len(self.candidates) < 50:  # 少なくなってきたら正解候補の中から選ぶ
+            return self.candidates[scores_candidates.index(max(scores_candidates))]
+        else:
+            return all_candidates[combined_scores.index(max(combined_scores))]
