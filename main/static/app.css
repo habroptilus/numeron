@@ -63,6 +63,12 @@ a.disabled{
   margin-top:10px;
   border-radius:10px;
 }
+.history.YOU{
+    background-color:skyblue;
+}
+.history.CPU{
+    background-color: gray;
+}
 table{
   width:125px;
   font-size:large;

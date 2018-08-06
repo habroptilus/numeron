@@ -10,9 +10,9 @@ export default class History extends React.Component{
          </tr>
     )
     const player=this.props.player
-
+    const className=['history',player].join(' ')
     return(
-      <div className="history">
+      <div className={className}>
            <table className="history-table">
                   <thead><tr><td colSpan="2">{player}</td></tr></thead>
                   <tbody>{history}</tbody>
