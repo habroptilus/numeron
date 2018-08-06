@@ -146,11 +146,12 @@ class Main extends React.Component{
 
 
   handleRestart(){
+      const cpu_answer=this.getCPUAnswer()
     this.setState({
         filled:0,
         buttons:Array(9).fill(false),
         answer:Array(3).fill(null),
-        cpu_answer:Array(3).fill(null),
+        cpu_answer:cpu_answer,
         history:[],
         cpu_history:[],
         correct:this.createCorrect(),
