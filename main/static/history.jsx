@@ -16,6 +16,13 @@ export default class History extends React.Component{
            <table className="history-table">
                   <thead><tr><td colSpan="2">{player}</td></tr></thead>
                   <tbody>{history}</tbody>
+                  <tfoot>
+                      <tr>
+                          <td>正解 :</td>
+                          <td>{this.props.correct}</td>
+                      </tr>
+                  </tfoot>
+
            </table>
       </div>
     );

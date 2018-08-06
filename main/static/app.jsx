@@ -181,6 +181,8 @@ class Main extends React.Component{
 
 
   render(){
+     const correct=this.state.finished ? this.state.correct : "???"
+     const cpu_correct=this.state.cpu_correct
      const count =this.state.history.length
      const latest_judge=this.state.latest_judge
      const latest_cpu_judge=this.state.latest_cpu_judge
@@ -202,8 +204,8 @@ class Main extends React.Component{
       <div className="main">
         <div className="row">
           {restart}
-          <div className="col-xs-3"><History history={this.state.history} player="YOU" /></div>
-          <div className="col-xs-3"><History history={this.state.cpu_history} player="CPU" /></div>
+          <div className="col-xs-3"><History history={this.state.history} correct={cpu_correct} player="YOU" /></div>
+          <div className="col-xs-3"><History history={this.state.cpu_history} correct={correct} player="CPU" /></div>
         </div>
       </div>
     );

@@ -69,6 +69,12 @@ table{
   text-align:center;
   color:white;
 }
+thead{
+    border-bottom: solid white;
+}
+tfoot{
+    border-top: solid white;
+}
 
 .restart-btn{
     display: inline-block;
