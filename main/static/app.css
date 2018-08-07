@@ -81,14 +81,16 @@ tfoot{
     border-top: solid white;
 }
 
-.restart-btn{
+a.restart-btn{
     display: inline-block;
     padding: 0.3em 1em;
     text-decoration: none;
-    color: #67c5ff;
+    color: tomato;
     border: solid 2px #67c5ff;
     border-radius: 3px;
     transition: .4s;
+    font-size: 30px;
+    background-color: lightgray;
 }
 .restart-btn:hover {
     background: #67c5ff;
@@ -108,7 +110,7 @@ tfoot{
   text-align:center;
   font-size:18px;
   color:gray;
-  height:250px;
+  height:300px;
   margin-top:10px;
   border-radius:10px;
 }
@@ -120,6 +122,7 @@ tfoot{
     color: gray;
     font-weight: bold;
     letter-spacing: 0.05em;
+    border-radius: 10px;
 }
 .win{
     background:yellow;
