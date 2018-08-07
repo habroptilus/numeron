@@ -29,9 +29,11 @@
 }
 .none{
   background-color:white;
+  opacity: 0;
 }
 .none:hover{
   background-color:white;
+  opacity: 0;
 }
 
 .square {
@@ -161,4 +163,27 @@ a.restart-btn{
     width: 50%;
     margin-top: 3%;
     margin-bottom: 3%;
+}
+
+@media (max-width: 940px) {
+    #react-container{
+        width: 80%;
+    }
+    .readme{
+        width:80%;
+    }
+}
+
+@media (max-width: 767px) {
+    #react-container{
+        width: 100%;
+    }
+    .readme{
+        width: 100%;
+    }
+
+    div.col-xs-3, div.col-xs-5{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
 }

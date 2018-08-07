@@ -185,9 +185,9 @@ class Main extends React.Component{
      const count =this.state.history.length
      const latest_judge=this.state.latest_judge
      const latest_cpu_judge=this.state.latest_cpu_judge
-     const restart = this.state.finished ?<div className="col-xs-6">
+     const restart = this.state.finished ?<div className="col-xs-5 col-md-6">
           <Restart count={count} latest_judge={latest_judge} cpu_judge={latest_cpu_judge} onClick={this.handleRestart.bind(this)} />
-        </div> : <div className="col-xs-6">
+        </div> : <div className="col-xs-5 col-md-6">
             <div className="row">
               <Answer answer={this.state.answer} />
             </div>
