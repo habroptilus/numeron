@@ -14,9 +14,9 @@
   text-decoration: none;
   background: #87befd;
   color: #FFF;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
   border-radius: 50%;
   text-align: center;
   vertical-align: middle;
@@ -41,15 +41,14 @@
   font-size: 24px;
   font-weight: bold;
   line-height: 25px;
-  height: 25px;
+  height: 40px;
   padding: 0;
   margin:0 0.1em 0 0;
   text-align: center;
-  width: 25px;
+  width: 40px;
 }
 .answer{
   margin-bottom:10px;
-  padding-left:6px;
   padding-top:18px;
 }
 
@@ -58,7 +57,7 @@ a.disabled{
     background-color:gray;
 }
 .history{
-  height:250px;
+  height:300px;
   background-color:skyblue;
   margin-top:10px;
   border-radius:10px;
