@@ -6,30 +6,31 @@
     <link rel="stylesheet" href="static/app.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 </head>
-
-<h2>Numeron App</h2>
-<p>数当てゲームです。</p>
-<div class="readme">
-<ol>
-    <li>
-        ゲームの説明と遊び方、一人用プレイはこちら->
-        <a href="http://www.smartbowwow.com/2018/04/reactnumeron.html">
-            Reactで数当てゲーム(NumerOn)を作ってみた(遊べるよ！)
-        </a>
-     </li>
-     <li>
-         CPUの戦略はこちら->
-         <a href="#">
-             NumeronのAIをPythonで実装した
-         </a>
-     </li>
-     <li>
-         アプリ制作者の運営するブログです->
-         <a href="http://www.smartbowwow.com/">ぐりろぐ</a>
-     </li>
-</ol>
+<div class="header">
+    <h1>Numeron App</h2>
+    <p>いわゆる数当てゲームです。</p>
+    <p>相手より先に相手の持っている3ケタの数字を当てましょう。</p>
+    <p>ゲームの詳しい説明は<a href="http://www.smartbowwow.com/2018/04/reactnumeron.html">
+        こちら
+    </a></p>
 </div>
+
 {% block body %}
 {% endblock %}
+<div class="readme">
+    <div class="readme-header">
+        <h3>あそびかた</h3>
+    </div>
+    <div class="readme-body">
+        <ol>
+            <li>あなたが先攻です。あなたの番号は自動的にランダムに作成されます。</li>
+             <li>3けたの数字を入力してTRYをクリック。判定結果がYOUの枠に表示されます。</li>
+             <li>すぐにCPUの回答が行われます。</li>
+             <li>CPUより早い段階で相手の???を当てましょう。</li>
+             <li>ちなみに、同じ回数で正解すると引き分けです。</li>
+        </ol>
+    </div>
+
+</div>
 <script src="./static/bundle.js" ></script>
 </html>
