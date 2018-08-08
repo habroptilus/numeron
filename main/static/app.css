@@ -165,6 +165,16 @@ a.restart-btn{
     margin-bottom: 3%;
 }
 
+.footer-btn{
+    display: inline-block;
+    padding: 0.5em 0.6em;
+    text-decoration: none;
+    color: #FFF;
+    transition: .4s;
+    border-radius: 10px;
+}
+
+
 @media (max-width: 940px) {
     #react-container{
         width: 80%;

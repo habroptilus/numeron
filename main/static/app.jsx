@@ -195,8 +195,11 @@ class Main extends React.Component{
                <Form buttons={this.state.buttons} onClick={(i) => this.handleClick.bind(this)(i)} />
             </div>
             <div className="row btnrow">
-              <div ><Delete onClick={this.handleDelete.bind(this)} /></div>
-              <div ><Post onClick={this.handlePost.bind(this)} /></div>
+                  <Delete onClick={this.handleDelete.bind(this)} />
+                  <div className="col-xs-2 none">
+                      <a className="footer-btn damy" href="#"></a>
+                  </div>
+                  <Post onClick={this.handlePost.bind(this)} />
             </div>
           </div>;
     return(
