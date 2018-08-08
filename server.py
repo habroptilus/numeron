@@ -1,13 +1,12 @@
 from flask import Flask, render_template, jsonify, request
 from random import sample
-
+from main import app
 import sys
 import os
 sys.path.append(os.pardir)
 
 from solver.cpu import Numeron_CPU
 from solver.utils import *
-app = Flask(__name__)
 
 
 def random_answer():
