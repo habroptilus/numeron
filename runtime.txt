@@ -1,1 +1,1 @@
-Python 3.6.2 :: Anaconda custom (x86_64)
+Python 3.6.6
